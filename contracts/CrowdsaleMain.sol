@@ -49,7 +49,7 @@ contract CrowdsaleMain is Ownable{
 	DGCT public coin;
 
 	/*Maximum Ether for one address during pre ico or main ico */
-	uint public maximumCoinsPerAddress = 200 ether;
+	uint public maximumCoinsPerAddress = 400 ether;
     
 	/* Multisig contract that will receive the Ether during main ico*/
 	address public mainMultisigEther;
