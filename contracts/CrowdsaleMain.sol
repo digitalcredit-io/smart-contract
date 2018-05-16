@@ -29,7 +29,7 @@ contract CrowdsaleMain is Ownable{
     enum Phases {PreStart,  MainIco, AfterIco}
 
 	/* Maximum number of DGCT to main ico sell */
-	uint public constant MAIN_MAX_CAP = 1000000000 * 10**18; // 1,000,000,000 DGCT
+	uint public constant MAIN_MAX_CAP = 2000000000 * 10**18; // 2,000,000,000 DGCT
 
 	/* Minimum amount to invest */
 	uint public constant MIN_INVEST_ETHER = 100 finney;
