@@ -17,7 +17,7 @@ contract ICO is Ownable {
 	uint public constant MIN_INVEST_ETHER = 100 finney;
 	
 	/* Maximum Token Supply 10,000,000,000 DGCT, will not be changed*/
-	uint256 public constant TOTAL_TOKEN_SUPPLY = 1000000000 * (10 ** 18);
+	uint256 public constant TOTAL_TOKEN_SUPPLY = 10000000000 * (10 ** 18);
 
 	/*
 	* Variables
