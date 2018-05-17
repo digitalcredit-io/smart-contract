@@ -96,7 +96,6 @@ contract ICO is Ownable {
      */
     function buyTokens() public payable {		
         validatePurchase(msg.value);
-		require(msg.value >= MIN_INVEST_ETHER);
         uint256 tokenToBuy = msg.value.mul(rate);
         
         weiRaised = weiRaised.add(msg.value);
@@ -134,7 +133,8 @@ contract ICO is Ownable {
     function validatePurchase(uint256 weiPaid) internal view{
         require(!saleClosed);
         require(now >= initialTime && now < endTime);
-        require(whiteList[msg.sender]);
-        require(weiPaid <= weiCap.sub(weiRaised));        
+        require(whitelist[msg.sender]);
+        require(weiPaid <= weiCap.sub(weiRaised));
+        require(weiPaid >= MIN_INVEST_ETHER);
     }
 }
