@@ -114,18 +114,18 @@ contract ICO is Ownable {
     }
 
     /**
-     * @dev close the ICO
+     * @dev close the current ICO
      */
     function closeSale() public onlyOwner {
-        saleClosed = true;
-		remainingTokenSupply = remainingTokenSupply.sub(token.totalSupply());
-        token.mint(owner, remainingTokenSupply);        
+        saleClosed = true;		      
     }
 
 	/**
      * @dev stop Minting(token cannot be mint anymore)
      */
     function stopMinting() public onlyOwner {
+		remainingTokenSupply = remainingTokenSupply.sub(token.totalSupply());
+        token.mint(owner, remainingTokenSupply);  
         token.finishMinting();
         token.transferOwnership(owner);
     }
