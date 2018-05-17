@@ -83,7 +83,7 @@ contract ICO is Ownable {
      * @dev fallback function ***DO NOT OVERRIDE***
      */
     function() external payable {
-        buyTokens();
+        buyTokens(msg.sender);
     }
 	
     /**
@@ -115,14 +115,14 @@ contract ICO is Ownable {
     /**
      * @dev buy tokens
      */
-    function buyTokens() public payable {		
-        validatePurchase(msg.value);
+    function buyTokens(address _beneficiary) public payable {		
+        validatePurchase(msg.value, _beneficiary);
         uint256 tokenToBuy = msg.value.mul(rate);
         
         weiRaised = weiRaised.add(msg.value);
-        token.mint(msg.sender, tokenToBuy);
+        token.mint(_beneficiary, tokenToBuy);
         wallet.transfer(msg.value);
-        emit BuyTokens(msg.value, rate, tokenToBuy, msg.sender);
+        emit BuyTokens(msg.value, rate, tokenToBuy, _beneficiary);
     }
 
     /**
@@ -152,10 +152,10 @@ contract ICO is Ownable {
         token.transferOwnership(owner);
     }
 	
-    function validatePurchase(uint256 weiPaid) internal view{
+    function validatePurchase(uint256 weiPaid, address _beneficiary) internal view{
         require(!saleClosed);
         require(now >= initialTime && now < endTime);
-        require(whitelist[msg.sender]);
+        require(whitelist[_beneficiary]);
         require(weiPaid <= weiCap.sub(weiRaised));
         require(weiPaid >= MIN_INVEST_ETHER);
     }
