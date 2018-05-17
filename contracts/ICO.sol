@@ -57,6 +57,27 @@ contract ICO is Ownable {
 
         token = new DigitalCreditToken();
     }
+	
+	/**
+	 * @dev create a new ICO
+	 */
+	function createNewICO(address _wallet, uint256 _rate, uint256 _startDate, uint256 _endDate, uint256 _weiCap, address _tokenAddress)  public onlyOwner {
+		//require previous sale closed
+		require(saleClosed);
+        require(_rate > 0);
+        require(_wallet != address(0));
+        require(_weiCap.mul(_rate) <= remainingTokenSupply);
+
+        wallet = _wallet;
+        rate = _rate;
+        initialTime = _startDate;
+		endTime = _endDate;
+        saleClosed = false;
+        weiCap = _weiCap;
+        weiRaised = 0;
+
+        token = DigitalCreditToken(_tokenAddress);	      
+    }
 
     /**
      * @dev fallback function ***DO NOT OVERRIDE***
@@ -117,14 +138,15 @@ contract ICO is Ownable {
      * @dev close the current ICO
      */
     function closeSale() public onlyOwner {
-        saleClosed = true;		      
+        saleClosed = true;
+		remainingTokenSupply = remainingTokenSupply.sub(token.totalSupply());
     }
 
 	/**
      * @dev stop Minting(token cannot be mint anymore)
      */
     function stopMinting() public onlyOwner {
-		remainingTokenSupply = remainingTokenSupply.sub(token.totalSupply());
+	    require(saleClosed);
         token.mint(owner, remainingTokenSupply);  
         token.finishMinting();
         token.transferOwnership(owner);
