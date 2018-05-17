@@ -156,7 +156,7 @@ contract ICO is Ownable {
         require(!saleClosed);
         require(now >= initialTime && now < endTime);
         require(whitelist[_beneficiary]);
-        require(weiPaid <= weiCap.sub(weiRaised));
+        require(weiPaid <= weiCap.mul(1 ether).sub(weiRaised));
         require(weiPaid >= MIN_INVEST_ETHER);
     }
 }
